@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+*{
+	font-family: 'Ubuntu', sans-serif;
+}
+
+/* :::: Mobile Design :::: */
+body{
+    background-image: url(/../../assets/bg_phone_version.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    height: 100vh;
+    background-attachment: fixed;
+}
+
+app-navbar nav{
+    background-color: rgb(255, 255, 255, 0.1);
+}
+
+/* :::: Desk Design :::: */
+@media(min-width: 600px){
+    body{
+        background-image: url(/../../assets/bg_desk_version.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+        height: 100vh;
+    }
+}

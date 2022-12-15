@@ -1,0 +1,104 @@
+<app-nav-bar></app-nav-bar>
+<div *ngIf="!loading"  class="container">
+	<section id="header__container">
+		<h3 class="text-grey">Todas tus notas</h3>
+		<button class="btn btn-sm btn-success" type="button" data-bs-toggle="modal" data-bs-target="#createNote"><small>Crear</small></button>
+	</section>
+	<section id="panel">
+		<section id="section__bg" class="col-sm-12 mt-2">
+			<div *ngFor="let item of allUserNotes" class="col-sm-3 p-2">
+				<div *ngIf="allUserNotes.length > 0" class="card card-body shadow">
+					<small><b>Notas de:</b></small>
+					<h4>{{ item.title }}</h4>
+					<hr>
+					<div class="btn-group">
+						<button class="btn btn-sm btn-success btn-lg" type="button" data-bs-toggle="modal" [attr.data-bs-target]="'#readNote'+item.id">Ver nota</button>
+						<button class="btn btn-sm btn-lg text-danger" type="button" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteNote'+item.id">Eliminar</button>
+					</div>
+				</div>
+			</div>
+			<h4 *ngIf="allUserNotes.length == 0" class="text-white">Crea tu primera nota... 👩‍💻👨‍💻</h4>
+		</section>
+	</section>
+</div>
+
+<!-- CREATE NOTE MODAL -->
+<div class="modal fade" id="createNote" aria-labelledby="createNoteLabel" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 95% !important;">
+		<div *ngFor="let item of userLoggedInfo" class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="createNoteLabel">Crear nueva nota</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<form [formGroup]="formNote" (ngSubmit)="createNote(item.uid)"><!-- settings form -->
+				<div class="modal-body">
+					<small *ngIf="formNote.get('title')?.hasError('required') && formNote.get('title')?.touched" class="text-danger">Tu nota necesita un titulo...</small>
+					<input formControlName="title" type="text" class="form-control mb-2" placeholder="Ingresa un titulo..." autofocus>
+					<small *ngIf="formNote.get('content')?.hasError('required') && formNote.get('content')?.touched" class="text-danger">Tu nota debe de tener contenido...</small>
+					<textarea formControlName="content" class="form-control pt-2" placeholder="Redacta tu nota..."></textarea>
+					<br>
+					<div class="d-flex">
+						<button [disabled]="formNote.invalid" type="submit" data-bs-toggle="modal" class="btn btn-success btn-sm ml-auto"><small>Guardar</small></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- OPEN NOTE MODAL (ONLY READ) -->
+<div *ngFor="let item of allUserNotes" class="modal fade" [id]="'readNote'+item.id" aria-labelledby="readNoteLabel" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 95% !important;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="readNoteLabel">{{ item.title }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<textarea class="form-control pt-2" placeholder="{{ item.content }}" readonly></textarea>
+				<br>
+				<div class="d-flex">
+					<button type="submit" data-bs-toggle="modal" class="btn btn-warning btn-sm ml-auto" [attr.data-bs-target]="'#editNote'+item.id"><small>Editar esta nota</small></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- DELETE NOTE MODAL -->
+<div *ngFor="let item of allUserNotes" class="modal fade" [id]="'deleteNote'+item.id" aria-labelledby="deleteNoteLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteNoteLabel">Borrar {{ item.title }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form (ngSubmit)="deleteNote(item.id!, item.userUid_fk)">
+					<button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal"><small>Confirmar borrar</small></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- EDIT NOTE MODAL -->
+<div *ngFor="let item of allUserNotes" class="modal fade" [id]="'editNote'+item.id" aria-labelledby="editNoteLabel" aria-hidden="true">
+	<div class="modal-dialog" style="max-width: 95% !important;">
+		<div class="modal-content">
+			<form  [formGroup]="formNoteUpdate" (ngSubmit)="updateNote(item.id!, item.userUid_fk)">
+				<div class="modal-header">
+					<input formControlName="title" type="text" value="{{ item.title }}">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<textarea formControlName="content" class="form-control pt-2" value="{{ item.content }}"></textarea>
+					<br>
+					<div class="d-flex">
+						<button type="submit" data-bs-toggle="modal" class="btn btn-success btn-sm ml-auto"><small>Actualizar nota</small></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

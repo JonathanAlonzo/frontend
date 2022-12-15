@@ -1,0 +1,18 @@
+<nav *ngFor="let item of userLoggedInfo" class="navbar navbar-expand-lg navbar-light p-2">
+    <div id="user__data">
+      <p id="user">{{ item.user_name}}</p>
+      <p id="email">{{ item.email }}</p>
+    </div>
+    <div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-bs-controls="navbarNavDropdown" aria-bs-expanded="false" aria-bs-label="Toggle navigation">
+        <img src="{{ item.photoUrl }}" alt="avatar_user_account" class="rounded-circle shadow">
+      </button>      
+    </div>
+    <div class="collapse navbar-collapse " id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active important">
+          <button (click)="onClick()" class="dropdown-item text-danger">Cerrar sesión</button>
+        </li>
+      </ul>
+    </div>
+  </nav>

@@ -1,0 +1,23 @@
+#bg-login__hero{
+    background-image: url('../../../assets/bg_signIn.png');
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-attachment: fixed;
+}
+
+#bg-login__hero #logo__app{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 300px;
+}
+
+#bg-login__hero #login__items{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+}
