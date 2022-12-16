@@ -14,6 +14,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
 import { SplashScreenComponent } from './shared/splash-screen/splash-screen.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging'
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireMessagingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

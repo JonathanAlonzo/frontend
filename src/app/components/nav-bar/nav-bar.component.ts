@@ -4,6 +4,8 @@ import { User } from '../../interfaces/user';
 import { Note } from '../../interfaces/note';
 import { UserService } from 'src/app/services/user.service';
 import { NoteService } from 'src/app/services/note.service';
+import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+import { mergeMapTo } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav-bar',
@@ -21,6 +23,7 @@ export class NavBarComponent implements OnInit {
     private noteService: NoteService,
     private route : ActivatedRoute,
     private router: Router,
+    private afMessaging: AngularFireMessaging
   ) { }
 
   ngOnInit(): void {
@@ -51,5 +54,18 @@ export class NavBarComponent implements OnInit {
       this.router.navigate(['login']);
     })
     .catch(error => console.log(error));
+  }
+
+  rrequestPermission() {
+    this.afMessaging.requestPermission
+      .pipe(mergeMapTo(this.afMessaging.tokenChanges))
+      .subscribe(
+        (token) => { console.log('Permission granted! Save to the server!', token); },
+        (error) => { console.error(error); },  
+      );
+  }
+
+  getTOken() {
+    this.afMessaging.getToken.subscribe((res) => console.log('Token: ', res))
   }
 }

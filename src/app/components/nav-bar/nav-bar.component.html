@@ -10,8 +10,11 @@
     </div>
     <div class="collapse navbar-collapse " id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item active important">
-          <button (click)="onClick()" class="dropdown-item text-danger">Cerrar sesión</button>
+        <li>
+          <button (click)="rrequestPermission()" class="btn btn-sm">Activar notificaciones</button>
+        </li>
+        <li class="nav-dropdown-item text-dangeritem active important">
+          <button (click)="onClick()" class="btn btn-sm text-danger">Cerrar sesión</button>
         </li>
       </ul>
     </div>
